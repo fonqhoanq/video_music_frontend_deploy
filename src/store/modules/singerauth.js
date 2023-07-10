@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://54.199.17.60/";
 
 const state = {
   singer_auth_token: localStorage.getItem("singer_auth_token"),
@@ -11,7 +11,7 @@ const state = {
     age: localStorage.getItem("age"),
     avatarUrl: localStorage.getItem("avatarUrl")
   },
-  base_url: "http://localhost:3000/"
+  base_url: "http://54.199.17.60/"
 };
 const getters = {
   getSingerAuthToken(state) {
@@ -54,8 +54,6 @@ const actions = {
       axios
         .post(`${BASE_URL}singers/sign_in`, payload)
         .then((response) => {
-          console.log("response:")
-          console.log(response)
           commit("setSingerInfo", response);
           resolve(response);
         })
@@ -109,21 +107,23 @@ const mutations = {
     state.singer = data
   },
   setSingerInfo(state, data) {
+    console.log(data);
+    console.log(data.data.id);
     state.singer = {
-      id: data.data.id,
-      channelName: data.data.channelName,
-      email: data.data.email,
-      age: data.data.age,
+      id: data.data.singer.id,
+      channelName: data.data.singer.channel_name,
+      email: data.data.singer.email,
+      age: data.data.singer.age,
       avatarUrl: data.data.avatarUrl
     }
-    localStorage.setItem("id", data.data.id);
-    localStorage.setItem("channelName", data.data.channelName);
-    localStorage.setItem("email", data.data.email);
-    localStorage.setItem("age", data.data.age);
+    localStorage.setItem("id", data.data.singer.id);
+    localStorage.setItem("channelName", data.data.singer.channel_name);
+    localStorage.setItem("email", data.data.singer.email);
+    localStorage.setItem("age", data.data.singer.age);
     localStorage.setItem("avatarUrl", data.data.avatarUrl);
-
-    console.log("state singer")
-    console.log(state.singer)
+    console.log(localStorage.getItem("id"));
+    console.log(localStorage.getItem("avatarUrl"));
+    console.log(state.singer.age);
     state.singer_auth_token = data.headers.authorization;
     axios.defaults.headers.common["Authorization"] = data.headers.authorization;
     localStorage.setItem("singer_auth_token", data.headers.authorization);

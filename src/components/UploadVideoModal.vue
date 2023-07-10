@@ -333,7 +333,7 @@
         // this.formData.title = video.title;
         // this.formData.description = video.description;
         // this.formData.cateogry = video.cateogry;
-        this.url = `http://127.0.0.1:3000/videos/${video.id}/thumbnails`;
+        this.url = `http://54.199.17.60/videos/${video.id}/thumbnails`;
         // this.interval = setInterval(() => {
         //   if (this.value === 100) {
         //     this.uploaded = true
@@ -367,6 +367,7 @@
             this.submitLoading = false;
             this.uploaded = false;
             this.$emit("openSnackbar");
+            this.$emit("reloadPage");
           });
   
         if (!video) return;

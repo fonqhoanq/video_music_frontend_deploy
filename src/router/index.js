@@ -95,7 +95,7 @@ const routes = [
   },
   {
     path: '/channels/:id',
-    name: ChannelHome,
+    name: 'ChannelHome',
     component: ChannelHome
   },
   {
@@ -120,7 +120,7 @@ const routes = [
   },
   {
     path: '/subscriptions',
-    name: SubscribedVideos,
+    name: 'SubscribedVideos',
     component: SubscribedVideos
   },
   {

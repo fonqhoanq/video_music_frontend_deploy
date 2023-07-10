@@ -4,7 +4,7 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title class="font-weight-bold"
           ><router-link to="/" class="black--text" style="text-decoration: none"
-            >VueTube</router-link
+            >VuraTube</router-link
           ></v-toolbar-title
         >
         <v-spacer></v-spacer>
@@ -131,7 +131,7 @@
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on"> <v-icon size="25">mdi-apps</v-icon></v-btn>
           </template>
-          <span>VueTube apps</span>
+          <span>VuraTube apps</span>
         </v-tooltip> -->
   
         <!-- <v-tooltip bottom>
@@ -158,9 +158,14 @@
         <v-menu offset-y left v-else>
           <template v-slot:activator="{ on }">
             <v-btn small color="red" depressed fab v-on="on" class="white--text">
-              <v-avatar>
+              <v-avatar v-if="avatar !== 'undefined'">
                 <img
                   :src="`${getUrl}${avatar}`"
+                />
+              </v-avatar>
+              <v-avatar v-else>
+                <img
+                  :src="`${url}`"
                 />
               </v-avatar>
               <!-- <template v-else>
@@ -175,9 +180,14 @@
             <v-list>
               <v-list-item>
                 <v-list-item-avatar>
-                  <v-avatar>
+                  <v-avatar v-if="avatar !== 'undefined'">
                     <img
-                    :src="`${getUrl}${avatar}`"
+                      :src="`${getUrl}${avatar}`"
+                    />
+                  </v-avatar>
+                  <v-avatar v-else>
+                    <img
+                      :src="`${url}`"
                     />
                   </v-avatar>
                   <!-- <template v-else>
@@ -218,7 +228,7 @@
                 <v-list-item-icon>
                   <v-icon>mdi-youtube-studio</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>VueTube Studio</v-list-item-title>
+                <v-list-item-title>VuraTube Studio</v-list-item-title>
               </v-list-item>
               <v-list-item @click="signOut">
                 <v-list-item-icon>
@@ -249,7 +259,7 @@
                 @click="drawer = !drawer"
                 class="mr-5"
               ></v-app-bar-nav-icon>
-              <v-toolbar-title class="font-weight-bold">VueTube</v-toolbar-title>
+              <v-toolbar-title class="font-weight-bold">VuraTube</v-toolbar-title>
             </v-list-item>
             <v-divider class="hidden-lg-and-up"></v-divider>
             <div v-for="parentItem in items" :key="parentItem.header">
@@ -270,6 +280,7 @@
                     ? '/channels/' + item.id
                     : item.link
                 "
+                @click="settingsMoal(item.title)"
                 exact
                 active-class="active-item"
               >
@@ -393,6 +404,10 @@
           </v-list>
         </div>
       </v-navigation-drawer>
+      <settings-modal
+      :open-dialog="settingsDialog"
+      v-on:closeDialog="settingsDialog = false"
+      />
     </nav>
   </template>
   
@@ -403,6 +418,8 @@
   import NotificationService from '@/services/NotificationService'
   import moment from "moment";
   import OwnPlaylistService from '@/services/OwnPlaylistService';
+  import SettingsModal from '@/components/SettingsModal'
+
 
   export default {
     data: () => ({
@@ -488,10 +505,10 @@
           pages: []
         },
         {
-          header: 'MORE FROM VUETUBE',
+          header: 'MORE FROM VuraTube',
           pages: [
             {
-              title: 'VueTube Premium',
+              title: 'VuraTube Premium',
               link: '#vp',
               icon: 'mdi-youtube'
             },
@@ -546,6 +563,7 @@
         { text: 'Policy & Safety', link: '#' },
         { text: 'Test new features', link: '#' }
       ],
+      settingsDialog: false,
       channelLength: 0,
       playlistLength: 0,
       searchText: '',
@@ -565,7 +583,8 @@
         const data = {
           history_type: 'search',
           search_text: this.searchText,
-          userid: this.getCurrentUser.id
+          user_id: this.getCurrentUser.id,
+          video_id: 1
         }
   
         if (this.isLoggedIn)
@@ -626,6 +645,7 @@
         if (this.channelLength === 3)
           this.channelLength = this.items[2].pages.length
         else this.channelLength = 3
+        console.log(this.avatar)
       },
       morePlaylists() {
         if (this.playlistLength === 3)
@@ -669,7 +689,14 @@
         this.search()
         })
         recognition.start()
-      }
+      },
+      settingsMoal(title) {
+        if (title !== 'Setting') return
+        this.settingsDialog = true
+      },
+    },
+    components: {
+      SettingsModal
     },
     // beforeRouteLeave(to, from, next) {
     //   this.searchText = ''

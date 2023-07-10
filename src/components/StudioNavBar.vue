@@ -121,7 +121,7 @@
                 <v-list-item-icon>
                   <v-icon>mdi-youtube-studio</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>VueTube Studio</v-list-item-title>
+                <v-list-item-title>VuraTube Studio</v-list-item-title>
               </v-list-item>
               <v-list-item @click="signOut">
                 <v-list-item-icon>

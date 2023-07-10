@@ -18,7 +18,7 @@
 
       <main v-else>
         <div v-if="isLoggedIn && musicType === ''">
-          <h3 class="headline font-weight-medium" @click="showInfor">Playlists</h3>
+          <h3 class="headline font-weight-medium">Playlists</h3>
           <v-slide-group class="pa-4" multiple show-arrows>
             <v-slide-item
               v-for="(playlist, i) in loading ? 12 : playlists"
@@ -227,7 +227,6 @@ export default {
       }
       var videos = []
       if (this.musicType === '') {
-        console.log("hehe")
         videos = await VideoService.getAll('public', { page: this.page })
           .catch((err) => {
             console.log(err)
@@ -253,9 +252,10 @@ export default {
       if (typeof videos === 'undefined') return
       // this.videos.push(...videos.data)
       // $state.complete()
-      if (videos.data.length) {
+      console.log(videos.data)
+      console.log(videos.data.length)
+      if (videos.data.length > 0) {
         this.page += 1
-        console.log(`page: ${this.page}`)
         this.videos.push(...videos.data)
         if ($state) {
           $state.loaded()
@@ -264,6 +264,7 @@ export default {
       } else {
         $state.complete()
       }
+      console.log(this.videos)
     },
     async getPlaylists() {
       this.loading = true
@@ -280,8 +281,6 @@ export default {
         })
       if (typeof playlists === 'undefined') return
       this.playlists = playlists.data
-      console.log('playlist: ')
-      console.log(playlists)
     },
     dateFormatter(date) {
       return moment(date).fromNow()
@@ -324,22 +323,13 @@ export default {
         this.snackbar = true
         this.message = 'Removed from watch later!'
       })
-    },
-    showInfor() {
-      console.log(this.isLoggedIn)
-      console.log(localStorage.getItem('username'))
-      console.log(localStorage.getItem('id'))
-      console.log(this.getCurrentUser.id)
-      console.log(this.getCurrentUser.username)
-      console.log(this.getCurrentUser.avatarUrl)
-      console.log(this.getCurrentUser.email)      
     }
   },
   mounted() {
     if (this.isLoggedIn) {
       this.getPlaylists()
+      this.getVideos()
     }
-    this.getVideos()
   },
   components: {
     VideoCard,

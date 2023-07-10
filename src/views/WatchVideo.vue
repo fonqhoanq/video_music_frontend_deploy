@@ -35,7 +35,7 @@
                         @ended="onVideoEnded"
                         autoplay
                         style="height: 100%; width: 100%"
-                        :src="`${url}${video.url}`"
+                        :src="`${getUrl}${video.url}`"
                         type="video/mp4"
                         >
                       </video>
@@ -154,30 +154,10 @@
                       <v-col cols="12" sm="6" md="4" lg="4">
                         <div
                           class="d-flex justify-end align-center"
-                          v-if="typeof video.singer !== 'undefined'"
+                          v-if="video.singer"
                         >
-                          <v-btn
-                            v-if="
-                              getCurrentUser && video.singer.id !== getCurrentUser.id
-                            "
-                            :class="[
-                              { 'red white--text': !subscribed },
-                              {
-                                'grey grey--text lighten-3 text--darken-3': subscribed
-                              },
-                              'mt-6'
-                            ]"
-                            id="subscribeBtn"
-                            tile
-                            large
-                            depressed
-                            :loading="subscribeLoading"
-                            @click="subscribe"
-                            >{{ !subscribed ? 'subscribe' : 'subscribed' }}</v-btn
-                          >
   
                           <v-btn
-                            v-else-if="showSubBtn"
                             :class="[
                               { 'red white--text': !subscribed },
                               {
@@ -190,8 +170,8 @@
                             depressed
                             :loading="subscribeLoading"
                             @click="subscribe"
-                            >{{ !subscribed ? 'subscribe' : 'subscribed' }}</v-btn
-                          >
+                          >{{ !subscribed ? 'subscribe' : 'subscribed' }}
+                          </v-btn>
   
                           <!-- <v-btn
                             v-if="
@@ -662,11 +642,11 @@
           this.checkFeeling(this.video.id)
           this.checkWatchLater(this.video.id)
         }
-        if (this.getCurrentUser && this.getCurrentUser.id === this.video.singer.id) {
-          this.showSubBtn = false
-        } else {
-          this.showSubBtn = true
-        }
+        // if (this.getCurrentUser && this.getCurrentUser.id === this.video.singer.id) {
+        //   this.showSubBtn = false
+        // } else {
+        //   this.showSubBtn = true
+        // }
   
         if (!this.isLoggedIn) return
   
@@ -838,7 +818,7 @@
           .finally(() => {
             this.loading = false
           })
-        if (!feeling) return
+        if (!feeling || !feeling.data) return
         if (feeling.data.status === 'like') this.feeling = 'like'
         else if (feeling.data.status === 'dislike') this.feeling = 'dislike'
       },
@@ -904,6 +884,7 @@
           .finally(() => {
             this.loading = false
           })
+        if (!watchLater || !watchLater.data ) return
         watchLater.data.length == 0 ? this.isWatchLater = false : this.isWatchLater = true
         if (this.isWatchLater) {
           this.watchLaterId = watchLater.data[0].id
@@ -1122,7 +1103,7 @@
     },
     beforeRouteUpdate(to, from, next) {
       this.page = 1
-      ;(this.loading = false), (this.loaded = false), (this.videos = []), (this.video = {}), (this.playlist = {}), (this.watchLaterVideos = []), (this.ownPlaylist = [])
+      ;(this.loading = false), (this.loaded = false), (this.subscribed=false),(this.videos = []), (this.video = {}), (this.playlist = {}), (this.watchLaterVideos = []), (this.ownPlaylist = [])
       this.infiniteId += 1
       this.getVideo(to.params.id)
       let video = document.getElementById('videoPlayer')

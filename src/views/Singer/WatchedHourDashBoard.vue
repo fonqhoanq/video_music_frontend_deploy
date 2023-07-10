@@ -47,8 +47,9 @@ export default {
   },
   data: () => ({
     favoriteLabels: ['Like', 'Dislike'],
-    favoriteData: [],
-    hoursData: [],
+    favoriteData: [150, 5],
+    // hoursData: [],
+    hoursData: [10, 20, 90,30, 80, 50, 60, 40, 70, 100],
     viewYearlyLabels: [
         'Jan',
         'Feb',
@@ -62,7 +63,7 @@ export default {
         'Oct',
         'Nov'
       ],
-    genderColors: ['rgba(179,181,198,0.4)', 'rgba(255,99,132,0.4)'],
+    genderColors: ['rgba(255,99,132,0.4)', 'rgba(179,181,198,0.4)'],
     ageData: [10, 20, 90,30, 80, 50, 60, 40, 70, 100],
     headers: [
       { text: 'Content', value: 'content', align: 'start' },

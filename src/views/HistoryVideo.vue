@@ -277,7 +277,7 @@ export default {
     clearLoading: false
   }),
   computed: {
-    ...mapGetters(['getCurrentUser', 'getUrl'])
+    ...mapGetters(['getCurrentUser', 'getUrl', 'isLoggedIn'])
   },
   methods: {
     async getHistories($state) {
@@ -301,8 +301,6 @@ export default {
           this.loading = false
         })
       if (!histories) return
-      console.log('history')
-      console.log(histories)
       if (histories.data.length) {
         this.page += 1
 

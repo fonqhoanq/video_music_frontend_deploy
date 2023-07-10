@@ -20,7 +20,7 @@
                       <v-list-item-avatar size="80">
                         <v-img
                           v-if="channel.avatarUrl !== 'no-photo.jpg'"
-                          :src="`${url}${channel.avatarUrl}`"
+                          :src="`${getUrl}${channel.avatarUrl}`"
                         ></v-img>
   
                         <v-avatar v-else color="red" size="60">
@@ -205,7 +205,7 @@
       details: {}
     }),
     computed: {
-      ...mapGetters(['isLoggedIn', 'getCurrentUser'])
+      ...mapGetters(['isLoggedIn', 'getCurrentUser', 'getUrl'])
     },
     components: {
       VideoCard,
@@ -255,7 +255,6 @@
         if (typeof videos === 'undefined') return
   
         this.videos = videos.data
-        console.log(this.videos)
       },
       async checkSubscription(id) {
         if (!this.isLoggedIn) return

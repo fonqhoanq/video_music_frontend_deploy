@@ -216,14 +216,13 @@
           password: false
         },
         imgDataUrl: `${this.$store.getters.getUrl}${localStorage.getItem('avatarUrl')}`,
-        url: `http://127.0.0.1:3000/users/${this.$store.getters.getCurrentUser.id}/avatar`,
+        url: `http://54.199.17.60/users/${this.$store.getters.getCurrentUser.id}/avatar`,
         headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       }
     },
     computed: {
       ...mapGetters(['getCurrentUser', 'getUrl']),
       dialog() {
-        console.log(this.getCurrentUser.username)
         return this.openDialog
       }
     },
@@ -325,9 +324,10 @@
         console.log('-------- upload success --------')
         const user = this.$store.getters.getCurrentUser
         var avatar = ''
-        if (jsonData.avatarUrl.includes('http://127.0.0.1:3000/')) {
-          avatar = jsonData.avatarUrl.replace('http://127.0.0.1:3000/', '')
+        if (jsonData.avatarUrl.includes('http://54.199.17.60/')) {
+          avatar = jsonData.avatarUrl.replace('http://54.199.17.60/', '')
         }
+        localStorage.setItem('avatarUrl', avatar)
         user.avatarUrl = avatar
         this.$store.dispatch('updateUserInfor', user)
         console.log('field: ' + field)

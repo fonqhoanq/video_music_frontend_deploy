@@ -77,7 +77,7 @@
                           
                               <v-menu offset-y left>
                                 <template v-slot:activator="{ on }">
-                                  <v-btn text @click="deletewatchLaterVideo(watchLaterVideo.id)" v-on="on">
+                                  <v-btn text v-on="on">
                                     <v-icon>mdi-dots-vertical</v-icon>
                                   </v-btn>
                                 </template>
@@ -92,13 +92,13 @@
                                       </v-list-item-icon>
                                       <v-list-item-title>Remove from watch later</v-list-item-title>
                                     </v-list-item>
-                                    <v-list-item router to="/studio">
+                                    <v-list-item @click="moveToTop(watchLaterVideo.id)">
                                       <v-list-item-icon>
                                         <v-icon>mdi-format-vertical-align-top</v-icon>
                                       </v-list-item-icon>
                                       <v-list-item-title>Move to top</v-list-item-title>
                                     </v-list-item>
-                                    <v-list-item @click="signOut">
+                                    <v-list-item @click="moveToBottom(watchLaterVideo.id)">
                                       <v-list-item-icon>
                                         <v-icon>mdi-format-vertical-align-bottom</v-icon>
                                       </v-list-item-icon>
@@ -259,8 +259,6 @@ export default {
           this.loading = false
         })
       if (!watchLaterVideos) return
-      console.log('watchLaterVideo')
-      console.log(watchLaterVideos)
       if (watchLaterVideos.data.length) {
         this.page += 1
 
@@ -310,7 +308,23 @@ export default {
           isWatchLaterList: true
         }
       })
-    }
+    },
+    moveToBottom(id) {
+      const index = this.watchLaterVideos.findIndex(
+        (watchLaterVideo) => watchLaterVideo.id.toString() === id.toString()
+      )
+      const watchLaterVideo = this.watchLaterVideos[index]
+      this.watchLaterVideos.splice(index, 1)
+      this.watchLaterVideos.push(watchLaterVideo)
+    },
+    moveToTop(id) {
+      const index = this.watchLaterVideos.findIndex(
+        (watchLaterVideo) => watchLaterVideo.id.toString() === id.toString()
+      )
+      const watchLaterVideo = this.watchLaterVideos[index]
+      this.watchLaterVideos.splice(index, 1)
+      this.watchLaterVideos.unshift(watchLaterVideo)
+    },
   },
   components: {
     InfiniteLoading,

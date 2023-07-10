@@ -61,7 +61,7 @@
                               <v-col cols="3" sm="2" md="5" lg="5">
                                 <v-img
                                   class="align-center"
-                                  :src="`${url}${itemToDelete.thumbnails}`"
+                                  :src="`${getUrl}${itemToDelete.thumbnails}`"
                                 >
                                 </v-img>
                               </v-col>
@@ -174,7 +174,7 @@ export default {
         align: "start",
         value: "title",
       },
-      { text: "Visibility", value: "status" },
+      { text: "Visibility", value: "status_text" },
       { text: "Views", value: "views" },
       { text: "Comments", value: "comments" },
       { text: "Likes (vs. dislikes)", value: "feelings" },

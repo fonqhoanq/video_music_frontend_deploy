@@ -67,13 +67,13 @@
                                   </v-list-item-icon>
                                   <v-list-item-title>Remove from {{ ownPlaylist.title }}</v-list-item-title>
                                 </v-list-item>
-                                <v-list-item router to="/studio">
+                                <v-list-item @click="moveToTop(video.video.id)">
                                   <v-list-item-icon>
                                     <v-icon>mdi-format-vertical-align-top</v-icon>
                                   </v-list-item-icon>
                                   <v-list-item-title>Move to top</v-list-item-title>
                                 </v-list-item>
-                                <v-list-item @click="signOut">
+                                <v-list-item @click="moveToBottom(video.video.id)">
                                   <v-list-item-icon>
                                     <v-icon>mdi-format-vertical-align-bottom</v-icon>
                                   </v-list-item-icon>
@@ -84,6 +84,7 @@
                           </v-menu>
                         </v-card-title>
                         <v-card-subtitle
+                          v-if="video.video.singer"
                           class="pl-2 pt-2 pb-0"
                           style="line-height: 1"
                         >
@@ -141,6 +142,7 @@
                         
                           </v-card-title>
                           <v-card-subtitle
+                            v-if="video.singer"
                             class="pl-2 pt-2 pb-0"
                             style="line-height: 1"
                           >
@@ -261,12 +263,7 @@ export default {
           this.loading = false
         })
       if (!ownPlaylist) return
-      console.log('ownPlaylist')
-      console.log(ownPlaylist)
-      console.log(this.$store.getters.getOwnPlaylist)
       // this.ownPlaylist = this.$store.getters.getOwnPlaylist
-      console.log('ownPlaylistss')
-      console.log(this.ownPlaylist.videos)
 
     },
     async getRecommendVideos(id) {
@@ -283,8 +280,6 @@ export default {
         })
       if (!videos) return
       this.recommendVideos = videos.data
-      console.log('recommendVideos')
-      console.log(this.recommendVideos)
     },
     async deleteOwnPlaylistVideo(id) {
       const video = await OwnPlaylistService.removeVideoFromPlaylist({
@@ -296,15 +291,14 @@ export default {
         })
         // .finally(() => {
         //   this.ownPlaylist.videos = this.ownPlaylist.videos.filter(
-        //     (video) => video.id.toString() !== id.toString()
+        //     (video) => video.id !== id
         //   )
         //   this.deleteMessage = 'Video Deleted Successfully'
         //   this.snackbar = true
         // })
       if (!video) return
-      console.log('tessttt')
       this.ownPlaylist.videos = this.ownPlaylist.videos.filter(
-        (video) => video.video.id.toString() !== id.toString()
+        (video) => video.video.id !== id
       )
       this.deleteMessage = 'Video Deleted Successfully'
       this.snackbar = true
@@ -343,7 +337,7 @@ export default {
         })
       if (!video) return
       this.recommendVideos = this.recommendVideos.filter(
-        (recommendVideo) => recommendVideo.id.toString() !== id.toString()
+        (recommendVideo) => recommendVideo.id !== id
       )
       // this.ownPlaylist.own_playlist_videos.push(video.data)
       this.$store.dispatch('addVideo', video.data)
@@ -352,13 +346,30 @@ export default {
     async refreshRecommendVideos() {
       this.getRecommendVideos(this.$route.params.id)
     },
+    moveToBottom(id) {
+      const video = this.ownPlaylist.videos.find(
+        (video) => video.video.id === id
+      )
+      this.ownPlaylist.videos = this.ownPlaylist.videos.filter(
+        (video) => video.video.id !== id
+      )
+      this.ownPlaylist.videos.push(video)
+    },
+    moveToTop(id) {
+      const video = this.ownPlaylist.videos.find(
+        (video) => video.video.id === id
+      )
+      this.ownPlaylist.videos = this.ownPlaylist.videos.filter(
+        (video) => video.video.id !== id
+      )
+      this.ownPlaylist.videos.unshift(video)
+    },
   },
   components: {
     NavBar,
     VIcon
 },
   mounted() {
-    console.log("ownPlaylistVideo")
     this.getOwnPlaylist(this.$route.params.id)
     this.getRecommendVideos(this.$route.params.id)
   },

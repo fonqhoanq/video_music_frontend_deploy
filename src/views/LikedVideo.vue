@@ -138,7 +138,6 @@
   
         if (typeof videos === 'undefined') return
         
-        console.log(videos.data)
         if (videos.data.length) {
           this.page += 1
           this.videos.push(...videos.data)

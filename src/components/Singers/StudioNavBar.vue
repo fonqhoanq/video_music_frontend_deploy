@@ -133,7 +133,7 @@
             <v-btn small color="red" depressed fab v-on="on" class="white--text">
               <v-avatar v-if="getCurrentSinger.avatarUrl !== 'no-photo.jpg'">
                 <img
-                  :src="`${getUrl}${avatar}`"
+                  :src="`${avatar}`"
                   :alt="`${getCurrentSinger.channelName} avatar`"
                 />
               </v-avatar>
@@ -151,7 +151,7 @@
                 <v-list-item-avatar>
                   <v-avatar v-if="getCurrentSinger.avatarUrl !== 'no-photo.jpg'">
                     <img
-                      :src="`${getUrl}${avatar}`"
+                      :src="`${avatar}`"
                     />
                   </v-avatar>
                   <template v-else>
@@ -192,7 +192,7 @@
                 <v-list-item-icon>
                   <v-icon>mdi-youtube-studio</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>VueTube Studio</v-list-item-title>
+                <v-list-item-title>VuraTube Studio</v-list-item-title>
               </v-list-item>
               <v-list-item @click="signOut">
                 <v-list-item-icon>
@@ -278,7 +278,7 @@
                     v-if="getCurrentSinger.avatarUrl !== 'no-photo.jpg'"
                   >
                     <img
-                      :src="`${getUrl}${avatar}`"
+                      :src="`${avatar}`"
                       :alt="`${getCurrentSinger.channelName} avatar`"
                     />
                   </v-avatar>

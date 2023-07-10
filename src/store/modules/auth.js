@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://54.199.17.60/";
 
 const state = {
   auth_token: localStorage.getItem("auth_token"),
@@ -11,7 +11,7 @@ const state = {
     age: localStorage.getItem("age"),
     avatarUrl: localStorage.getItem("avatarUrl")
   },
-  base_url: "http://localhost:3000/"
+  base_url: "http://54.199.17.60/"
 };
 const getters = {
   getAuthToken(state) {
@@ -54,8 +54,6 @@ const actions = {
       axios
         .post(`${BASE_URL}users/sign_in`, payload)
         .then((response) => {
-          console.log("response:")
-          console.log(response)
           commit("setUserInfo", response);
           resolve(response);
         })
@@ -128,8 +126,6 @@ const mutations = {
     localStorage.setItem("age", data.data.age);
     localStorage.setItem("avatarUrl", data.data.avatarUrl);
 
-    console.log("state user")
-    console.log(state.user)
     state.auth_token = data.headers.authorization;
     axios.defaults.headers.common["Authorization"] = data.headers.authorization;
     localStorage.setItem("auth_token", data.headers.authorization);

@@ -163,16 +163,13 @@ export default {
       },
       loading: false,
       imgDataUrl: `${this.$store.getters.getUrl}${this.$store.getters.getCurrentUser.avatarUrl}`,
-      url: `http://127.0.0.1:3000/users/${this.$store.getters.getCurrentUser.id}/avatar`,
+      url: `http://54.199.17.60/users/${this.$store.getters.getCurrentUser.id}/avatar`,
       headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
     }
   },
   computed: {
     ...mapGetters(['getCurrentUser', 'getUrl']),
     dialog() {
-      console.log(this.getCurrentUser.username)
-      console.log('check :')
-      console.log(this.check)
       return this.openDialog
     }
   },
@@ -193,7 +190,6 @@ export default {
       }).finally(() => {
         this.loading = false
       })
-      console.log(ownPlaylist)
       if (ownPlaylist) {
         this.$emit('closeDialog')
         this.$emit('openSnackbar')
@@ -215,8 +211,6 @@ export default {
       })
       if (!playlists) return
       this.playlists = playlists.data
-      console.log('this.playlists: ')
-      console.log(this.playlists)
     },
     async handleAddVideoToPlaylist() {
       if (this.check.length === 0) return

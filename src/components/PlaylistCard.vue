@@ -10,7 +10,7 @@
       <v-img
         v-if="playlist.playlist_videos[0]"
         class="img-video"
-        :src="`${url}${playlist.playlist_videos[0].video.thumbnails}`"
+        :src="`${getUrl}${playlist.playlist_videos[0].video.thumbnails}`"
   
       ></v-img>
       <figcaption class="text"><v-icon style="color:white">mdi-play</v-icon>Play All</figcaption>

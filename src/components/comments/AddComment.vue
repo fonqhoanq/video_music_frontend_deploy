@@ -65,7 +65,6 @@
     methods: {
       async createComment() {
         if (this.comment === '') return
-        console.log(this.getCurrentUser)
         this.loading = true
         const comment = await CommentService.createComment({
           text: this.comment,

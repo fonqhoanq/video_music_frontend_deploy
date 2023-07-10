@@ -51,6 +51,7 @@
         :open-dialog="dialog"
         v-on:closeDialog="dialog = false"
         v-on:openSnackbar=" snackbar = true"
+        v-on:reloadPage="reloadPage"
       />
       <v-snackbar  :timeout="timeout" v-model="snackbar">
         {{ uploadMessage }}
@@ -201,6 +202,12 @@
       showData() {
         console.log(this.viewWeeklyLabels)
         console.log(this.viewWeeklyData)
+      },
+      reloadPage() {
+        // window.location.reload()
+        window.setInterval(() => {
+          window.location.reload()
+        }, 4000)
       },
     },
     created() {

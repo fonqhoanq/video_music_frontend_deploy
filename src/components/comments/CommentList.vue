@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div v-if="!comments.length">
+      <div v-if="!comments">
         <p>No comment yet, leave a comment</p>
       </div>
       <div v-for="(comment) in loading ? 4 : comments" :key="comment.id">
@@ -14,7 +14,7 @@
                 <v-img
                   v-if="comment.user.avatarUrl !== 'no-photo.jpg'"
                   class="elevation-6"
-                  :src="`${url}${comment.user.avatarUrl}`"
+                  :src="`${getUrl}${comment.user.avatarUrl}`"
                 ></v-img>
                 <v-avatar v-else color="red">
                   <span class="white--text headline ">
@@ -78,7 +78,7 @@
                         <v-img
                           v-if="getCurrentUser.avatarUrl !== 'no-photo.jpg'"
                           class="elevation-6"
-                          :src="`${url}${avatar}`"
+                          :src="`${getUrl}${avatar}`"
                         ></v-img>
                         <v-avatar v-else color="red">
                           <span class="white--text headline ">
@@ -150,7 +150,7 @@
                             v-if="reply.user.avatarUrl !== 'no-photo.jpg'"
                             class="elevation-6"
                             :src="
-                              `${url}${reply.user.avatarUrl}`
+                              `${getUrl}${reply.user.avatarUrl}`
                             "
                           ></v-img>
                           <v-avatar v-else color="red">
@@ -242,7 +242,7 @@
       }
     },
     computed: {
-      ...mapGetters(['isLoggedIn', 'getCurrentUser'])
+      ...mapGetters(['isLoggedIn', 'getCurrentUser', 'getUrl'])
     },
     methods: {
       async getComments() {
@@ -251,17 +251,8 @@
           .dispatch('setComments', this.videoId)
           .catch((err) => console.log(err))
           .finally(() => (this.loading = false))
-        // console.log(this.loading)
         if (!comments) return
-        console.log("comments:")
-        console.log(comments)
-        // console.log(this.$store.getters.getComments.data)
         this.comments = comments.data
-        console.log((this.comments.length))
-
-        // console.log(this.comments.length)
-        // this.loading = false
-        // console.log(this.$store.getters.getComments.data)
       },
       async deleteComment(id) {
         if (!this.isLoggedIn) return
@@ -305,7 +296,6 @@
         reply.data.user = this.$store.getters.getCurrentUser
         reply.data.user.avatarUrl = this.avatar
         // this.$store.dispatch('addComment', reply.data.data)
-        // console.log(this.$store.getters.getComments.data)
         let comment = this.comments.find(
           (comment) => comment.id.toString() === id.toString()
         )
@@ -348,7 +338,6 @@
   
     mounted() {
       this.getComments()
-      console.log(this.comments)
     }
   }
   </script>

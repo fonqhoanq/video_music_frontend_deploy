@@ -21,8 +21,10 @@
             <template v-if="results.length === 0">
               <p class="text-center">Ops! No search results</p>
             </template>
+            <template
+            v-else
+            >
             <div
-              v-else
               v-for="(result, i) in loading ? 5 : results"
               :key="i"
               class="mb-5"
@@ -128,6 +130,8 @@
                 </v-card>
               </v-skeleton-loader>
             </div>
+            </template>
+
             <infinite-loading
               :identifier="infiniteId"
               @infinite="getSearchResults"
@@ -204,8 +208,6 @@
           })
   
         if (!results) return
-        console.log("results:")
-        console.log(results)
         if (results.data.length) {
           this.page += 1
   

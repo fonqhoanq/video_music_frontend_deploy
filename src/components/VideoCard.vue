@@ -8,12 +8,12 @@
     >
       <v-img
         class="img-video"
-        :src="`${url}${video.thumbnails}`"
+        :src="`${getUrl}${video.thumbnails}`"
   
       ></v-img>
       <v-row no-gutters>
         <v-col cols="2" v-if="card.type != 'noAvatar'">
-          <v-list-item class="pl-0 pt-3" router :to="`/channels/${channel._id}`">
+          <v-list-item class="pl-0 pt-3" router :to="`/channels/${channel.id}`">
             <v-list-item-avatar>
               <v-img
                 v-if="channel.photoUrl !== 'no-photo.jpg'"
@@ -126,7 +126,6 @@
       },
       handleAddWatchLater() {
         this.newWatchLaterId(this.video.id)
-        console.log( 'watchLaterID',this.watchLaterId)
         this.isWatchLater = !this.isWatchLater
         this.isWatchLater ? this.$emit('addWatchLater') : this.$emit('removeWatchLater', this.watchLaterId)
       },

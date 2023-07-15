@@ -163,7 +163,7 @@ export default {
       },
       loading: false,
       imgDataUrl: `${this.$store.getters.getUrl}${this.$store.getters.getCurrentUser.avatarUrl}`,
-      url: `http://54.199.17.60/users/${this.$store.getters.getCurrentUser.id}/avatar`,
+      url: `http://52.194.220.88/users/${this.$store.getters.getCurrentUser.id}/avatar`,
       headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
     }
   },

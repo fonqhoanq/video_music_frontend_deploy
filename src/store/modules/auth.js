@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://54.199.17.60/";
+const BASE_URL = "http://52.194.220.88/";
 
 const state = {
   auth_token: localStorage.getItem("auth_token"),
@@ -11,7 +11,7 @@ const state = {
     age: localStorage.getItem("age"),
     avatarUrl: localStorage.getItem("avatarUrl")
   },
-  base_url: "http://54.199.17.60/"
+  base_url: "http://52.194.220.88/"
 };
 const getters = {
   getAuthToken(state) {

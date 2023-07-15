@@ -13,5 +13,10 @@ export default {
   },
   deleteById(id) {
     return Api().delete(`comments/${id}`)
+  },
+  getBySinger(params) {
+    return Api().get(`comments/singer`, {
+      params
+    })
   }
 }

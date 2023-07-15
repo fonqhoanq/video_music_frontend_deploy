@@ -6,5 +6,8 @@ export default {
   },
   deleteById(id) {
     return Api().delete(`replies/${id}`)
+  },
+  createSingerReply(data) {
+    return Api().post('singer_replies', data)
   }
 }

@@ -42,7 +42,7 @@
                     </template>
   
                     <v-list v-if="isLoggedIn">
-                      <v-list-item @click="deleteComment(comment.id)">
+                      <v-list-item>
                         <v-list-item-title
                           ><v-icon>mdi-trash</v-icon>Delete</v-list-item-title
                         >
@@ -128,10 +128,10 @@
                 <v-expansion-panels>
                   <v-expansion-panel class="transparent elevation-0">
                     <v-expansion-panel-header
-                      v-if="comment.replies && comment.replies.length > 0"
+                      v-if="comment.replies && (comment.replies.length > 0 || comment.singer_replies.length > 0)"
                       class="blue--text text--darken-4 py-0"
                       >{{
-                        comment.replies.length
+                        comment.replies.length + comment.singer_replies.length
                       }}
                       replies</v-expansion-panel-header
                     >
@@ -182,7 +182,67 @@
   
                               <v-list>
                                 <v-list-item
-                                  @click="deleteReply(comment.id, reply.id)"
+                                >
+                                  <v-list-item-title
+                                    ><v-icon>mdi-trash</v-icon
+                                    >Delete</v-list-item-title
+                                  >
+                                </v-list-item>
+                              </v-list>
+                            </v-menu>
+                          </div>
+                          <v-list-item-subtitle
+                            class="mt-n2 black--text text--darken-4"
+                            >{{ reply.text }}</v-list-item-subtitle
+                          >
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-list-item
+                        three-line
+                        class="pl-0 mt-2"
+                        v-for="reply in comment.singer_replies"
+                        :key="reply.id"
+                      >
+                        <v-list-item-avatar
+                          v-if="typeof reply !== 'undefined'"
+                          size="50"
+                        >
+                          <v-img
+                            v-if="reply.singer.avatarUrl !== 'no-photo.jpg'"
+                            class="elevation-6"
+                            :src="
+                              `${getUrl}${reply.singer.avatarUrl}`
+                            "
+                          ></v-img>
+                          <v-avatar v-else color="red">
+                            <span class="white--text headline ">
+                              {{
+                                reply.singer.username
+                                  .split('')[0]
+                                  .toUpperCase()
+                              }}</span
+                            >
+                          </v-avatar>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                          <div class="d-flex mb-0">
+                            <v-list-item-title
+                              v-if="reply.singer"
+                              class="font-weight-medium caption mb-0 d-flex"
+                              >{{ reply.singer.username }}
+                              <span class="pl-2 font-weight-light grey--text">
+                                {{ dateFormatter(reply.createdAt) }}</span
+                              >
+                            </v-list-item-title>
+                            <v-menu bottom left v-if="isLoggedIn">
+                              <template v-slot:activator="{ on }">
+                                <v-btn icon v-on="on">
+                                  <v-icon>mdi-dots-vertical</v-icon>
+                                </v-btn>
+                              </template>
+  
+                              <v-list>
+                                <v-list-item
                                 >
                                   <v-list-item-title
                                     ><v-icon>mdi-trash</v-icon

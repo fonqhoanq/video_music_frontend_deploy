@@ -342,7 +342,7 @@
               title: 'Videos',
               link: '/singer/videos',
               icon: 'mdi-play-box-multiple'
-            }
+            },
             // {
             //   title: 'Playlists',
             //   link: '#p',
@@ -353,11 +353,11 @@
             //   link: '#a',
             //   icon: 'mdi-poll-box'
             // },
-            // {
-            //   title: 'Comments',
-            //   link: '#c',
-            //   icon: 'mdi-message-reply-text'
-            // },
+            {
+              title: 'Comments',
+              link: '/singer/comments',
+              icon: 'mdi-message-reply-text'
+            },
   
             // {
             //   title: 'Subtitles',

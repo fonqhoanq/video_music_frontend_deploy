@@ -17,6 +17,7 @@ import ChannelHome from '../views/Channel/ChannelHome.vue'
 import TrendingVideos from '../views/TrendingVideo.vue'
 import SubscribedVideos from '../views/SubscribedVideo.vue'
 import SingerVideos from '../views/Singer/VideoView.vue'
+import SingerComments from '../views/Singer/CommentView.vue'
 import DetailsVideo from '../views/Singer/DetailsVideo.vue'
 import WatchLaterVideos from '../views/WatchLaterVideo.vue'
 import OwnPlaylists from '../views/OwnPlaylistVideo.vue'
@@ -66,6 +67,11 @@ const routes = [
     path: '/singer/videos',
     name: SingerVideos,
     component: SingerVideos
+  },
+  {
+    path: '/singer/comments',
+    name: 'SingerComments',
+    component: SingerComments
   },
   {
     path: '/singer/details/:id',

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://52.194.220.88/";
+const BASE_URL = "http://54.65.201.67/";
 
 const state = {
   auth_token: localStorage.getItem("auth_token"),
@@ -11,7 +11,7 @@ const state = {
     age: localStorage.getItem("age"),
     avatarUrl: localStorage.getItem("avatarUrl")
   },
-  base_url: "http://52.194.220.88/"
+  base_url: "http://54.65.201.67/"
 };
 const getters = {
   getAuthToken(state) {
@@ -50,7 +50,7 @@ const actions = {
     });
   },
   loginUser({ commit }, payload) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       axios
         .post(`${BASE_URL}users/sign_in`, payload)
         .then((response) => {

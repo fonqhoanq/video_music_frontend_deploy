@@ -19,7 +19,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="Title"
-                rules="required|min:3"
+                rules="required|min:10|max:100"
               >
                 <v-text-field
                   :loading="inputLoading"
@@ -30,13 +30,12 @@
                   filled
                   dense
                   counter="100"
-                  max-length="100"
                 ></v-text-field>
               </ValidationProvider>
               <ValidationProvider
                 v-slot="{ errors }"
                 name="Description"
-                rules="required|min:3"
+                rules="required|min:30|max:800"
               >
                 <v-textarea
                   :loading="inputLoading"
@@ -46,8 +45,8 @@
                   label="Description"
                   placeholder="Tell viewers about your video"
                   rows="5"
-                  counter="5000"
-                  max-length="5000"
+                  counter="800"
+                  max-length="800"
                   v-model="formData.description"
                   row-height="20"
                 ></v-textarea>

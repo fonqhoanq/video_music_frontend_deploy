@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default () => {
   const axiosInstance = axios.create({
-    baseURL: `http://52.194.220.88`
+    baseURL: `http://54.65.201.67`
   })
 
   const token = localStorage.getItem('token')

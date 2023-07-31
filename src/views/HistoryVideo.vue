@@ -17,7 +17,7 @@
           <h1 class="title font-weight-medium pb-5">{{ historyType }}</h1>
           <template v-if="historyType == 'Watch History'">
             <template v-if="histories.length <= 0 && !loading">
-              <div class="center">
+              <div v-if="!isLoggedIn" class="center">
                 <v-icon class="icon">mdi-history</v-icon>
                 <h2>Keep track of what you watch</h2>
                 <p class="body-1">Sign in to access videos that you’ve watched</p>
@@ -33,6 +33,10 @@
                 >
                   <v-icon left size="26">mdi-account-circle</v-icon> Sign in
                 </v-btn>
+              </div>
+              <div v-else class="center">
+                <v-icon class="icon">mdi-history</v-icon>
+                <h2>History is empty</h2>
               </div>
             </template>
             <section>
@@ -61,16 +65,17 @@
                       </v-col>
                       <v-col>
                         <div class="ml-2">
-                          <v-card-title
-                            class="pl-2 pt-0 subtitle-1 font-weight-bold d-flex justify-space-between"
-                            style="line-height: 1"
-                          >
-                            {{ history.video.title }}
-
+                          <div class="contentt">
+                            <v-card-title
+                              class="pl-2 pt-0 subtitle-1 font-weight-bold"
+                              style="line-height: 1"
+                            >
+                              {{ history.video.title }}
+                            </v-card-title>
                             <v-btn text @click="deleteHistory(history.id)">
                               <v-icon>mdi-close</v-icon>
                             </v-btn>
-                          </v-card-title>
+                          </div>
 
                           <v-card-subtitle
                             class="pl-2 pt-2 pb-0"
@@ -79,6 +84,9 @@
                             {{ history.video.singer.channelName
                             }}<v-icon>mdi-circle-small</v-icon
                             >{{ history.video.views }} views
+                            <v-icon>mdi-circle-small</v-icon> Watched at {{
+                              dateFormatter(history.createdAt)
+                            }}
                           </v-card-subtitle>
                           <v-card-subtitle class="pl-2 pt-2 pb-0">
                             {{ history.video.description }}
@@ -233,13 +241,12 @@
                   </div>
                 </v-list-item-group>
               </v-list>
-              <div>
+              <!-- <div>
                 <v-btn text :loading="clearLoading" @click="clearHistory"
                   >Clear all {{ historyType }}</v-btn
                 >
-                <!-- <v-btn text>Pause {{ historyType }}</v-btn>
-                <v-btn text>Manage all activity</v-btn> -->
-              </div>
+
+              </div> -->
             </v-radio-group>
           </v-card>
         </v-col>
@@ -379,5 +386,10 @@ export default {
     font-size: 100px;
     color: black;
   }
+}
+.contentt {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
 }
 </style>

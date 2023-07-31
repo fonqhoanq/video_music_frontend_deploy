@@ -92,11 +92,13 @@
                     <v-list-item-content class="align-self-auto mt-0 pt-0">
                       <v-form :ref="`form${comment.id}`">
                         <v-text-field
+                          :error-messages="errors"
                           :ref="`${'input' + comment.id}`"
                           class="pt-0 mt-0 body-2"
                           placeholder="Add a public comment..."
                           @click="clickTextField"
                           :value="repliesInput[`input${comment.id}`]"
+                          counter="255"
                         >
                         </v-text-field>
                       </v-form>
@@ -128,7 +130,7 @@
                 <v-expansion-panels>
                   <v-expansion-panel class="transparent elevation-0">
                     <v-expansion-panel-header
-                      v-if="comment.replies && (comment.replies.length > 0 || comment.singer_replies.length > 0)"
+                    v-if="(comment.replies && comment.replies.length > 0) || (comment.singer_replies && comment.singer_replies.length > 0)"
                       class="blue--text text--darken-4 py-0"
                       >{{
                         comment.replies.length + comment.singer_replies.length
@@ -288,6 +290,14 @@
         required: true
       }
     },
+    watch: {
+      videoId: {
+        handler: function() {
+          this.getComments()
+        },
+        immediate: true
+      }
+    },
     data: function() {
       return {
         avatar: localStorage.getItem('avatarUrl'),
@@ -298,7 +308,8 @@
         btnLoading: false,
         url: process.env.VUE_APP_URL,
         snackbar: false,
-        loading: false
+        loading: false,
+        reply: ''
       }
     },
     computed: {

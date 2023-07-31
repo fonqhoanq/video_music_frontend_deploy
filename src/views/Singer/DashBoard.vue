@@ -207,7 +207,7 @@
         // window.location.reload()
         window.setInterval(() => {
           window.location.reload()
-        }, 4000)
+        }, 2000)
       },
     },
     created() {

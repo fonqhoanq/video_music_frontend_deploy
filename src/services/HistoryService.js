@@ -12,5 +12,8 @@ export default {
   },
   deleteAll(type) {
     return Api().delete(`histories/${type}/all`)
+  },
+  getHistorySearch(params) {
+    return Api().get('histories/search', { params: params })
   }
 }

@@ -44,6 +44,8 @@
         required: true,
       },
       card: Object,
+      isSingerPlaylist: Boolean,
+      isOwnPlaylist: Boolean
     },
     data() {
       return {
@@ -59,13 +61,33 @@
         return moment(date).fromNow();
       },
       handlePlayList() {
-        this.$router.push({
-          name: 'WatchVideo',
-          params: {
-            id: this.playlist.playlist_videos[0].video.id,
-            playlist_id: this.playlist.id
-          }
-        })
+        if (this.isSingerPlaylist) {
+          this.$router.push({
+            name: 'WatchVideo',
+            params: {
+              id: this.playlist.playlist_videos[0].video.id,
+              topic_playlist_id: this.playlist.id, 
+              is_topic_playlist: true
+            }
+          })
+        } else if (this.isOwnPlaylist) {
+            this.$router.push({
+              name: 'WatchVideo',
+              params: {
+                id: this.playlist.playlist_videos[0].video.id,
+                isWatchOwnPlayList: true,
+                own_playlist_id: this.playlist.id
+              }
+            })
+        } else {
+          this.$router.push({
+            name: 'WatchVideo',
+            params: {
+              id: this.playlist.playlist_videos[0].video.id,
+              playlist_id: this.playlist.id
+            }
+          })
+        }
       }
     },
   };

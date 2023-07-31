@@ -192,7 +192,45 @@
               "
             >
             </v-img>
-            <p class="title font-weight-regular mt-2 mb-2">{{ ownPlaylist.title }}</p>
+            <div class="titleWrap">
+                <p class="title font-weight-regular mt-2 mb-2">{{ ownPlaylist.title }}</p>
+                <v-btn class="btnCss titleBtn" @click="dialogDelete = true">
+                  <v-icon>
+                    mdi-trash-can-outline
+                  </v-icon>
+                </v-btn>   
+              </div>
+                <v-dialog v-model="dialogDelete" persistent max-width="500px">
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline"
+                        >Delete playlist</span
+                      >
+                    </v-card-title>
+                    <v-card-text>
+                      Are you sure you want to delete {{ ownPlaylist.title}}?
+                      <br />
+                      Note: Deleting playlists is a permanent action and cannot be undone.
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="dialogDelete = !dialogDelete"
+                        >Cancel</v-btn
+                      >
+
+                      <v-btn
+                        :loading="deleteBtnLoading"
+                        color="blue darken-1"
+                        text
+                        @click="deletePlaylist"
+                        >Delete Forever</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
             <div>
               <p>{{ userName }}</p>
               <div class="content">
@@ -234,6 +272,8 @@ import VideoService from '@/services/VideoService'
 export default {
   data: function() {
     return {
+      dialogDelete: false,
+      deleteBtnLoading: false,
       userName: localStorage.getItem('username'),
       loading: false,
       loaded: false,
@@ -302,6 +342,19 @@ export default {
       )
       this.deleteMessage = 'Video Deleted Successfully'
       this.snackbar = true
+    },
+    async deletePlaylist() {
+      this.deleteBtnLoading = true
+      await OwnPlaylistService.deleteById(this.ownPlaylist.id)
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          this.deleteBtnLoading = false
+        })
+      this.$router.push({
+        name: 'Home'
+      })
     },
     dateFormatter(date) {
       return moment(date).fromNow()
@@ -422,5 +475,16 @@ export default {
   align-items: center !important;
   margin-right: 20px !important;
   margin-top: 20px !important;
+}
+.titleWrap {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  .titleBtn {
+    position: relative;
+    top: -15px;
+    background-color: #59514b !important;
+    color: white !important;
+  }
 }
 </style>

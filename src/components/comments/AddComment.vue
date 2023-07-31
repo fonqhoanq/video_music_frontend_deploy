@@ -17,12 +17,20 @@
           </v-avatar>
         </v-list-item-avatar>
         <v-list-item-content class="align-self-auto">
-          <v-text-field
-            v-model="comment"
-            placeholder="Add a public comment..."
-            @click="clickTextField"
+          <ValidationProvider
+            v-slot="{ errors }"
+            name="Comment"
+            rules="min:10|max:255"
           >
-          </v-text-field>
+            <v-text-field
+              :error-messages="errors"
+              v-model="comment"
+              placeholder="Add a public comment..."
+              @click="clickTextField"
+              counter="255"
+            >
+            </v-text-field>
+          </ValidationProvider>
           <div v-if="showCommentBtns" class="d-inline-block text-right">
             <v-btn text @click="showCommentBtns = !showCommentBtns">Cancel</v-btn>
             <v-btn
@@ -31,7 +39,7 @@
               depressed
               tile
               :loading="loading"
-              :disabled="comment === ''"
+              :disabled="comment.length < 10 || comment.length > 255"
               @click="createComment"
               >Comment</v-btn
             >

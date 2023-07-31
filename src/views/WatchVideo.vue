@@ -374,6 +374,54 @@
                     </v-list>
                   </v-card>
                 </template>
+                <template v-if="topicPlaylist.playlist_videos">
+                  <v-card>
+                    <v-list-item>
+                      <v-list-item-title
+                      class="mt-2 ml-2"
+                    >
+                      {{ topicPlaylist.title }}
+                    </v-list-item-title>
+                    </v-list-item>
+                    <v-list
+                      style="max-height: 500px"
+                      class="overflow-y-auto"
+                    >
+                    <div
+                    v-for="(playlist, i) in topicPlaylist.playlist_videos"
+                    :key="i"
+                    >
+                      <v-list-item
+                        :class="[
+                          {'playing': playlist.video.id === video.id}
+                          ]"
+                        @click="handleTopicPlaylist(playlist.video.id)"
+                      >
+                        <v-list-item-content class="mr-2">
+                          <div class="d-flex">
+                            <v-img
+                              height="60"
+                              width="100"
+                              class="img_url"
+                              :src="`${getUrl}${playlist.video.thumbnails}`"
+                            >
+                            </v-img>
+                            <div class="content">
+                              <v-list-item-title class="title">{{
+                                playlist.video.title
+                              }}</v-list-item-title>
+                              <v-list-item-subtitle>
+                                {{ playlist.video.singer.channelName }}
+                              </v-list-item-subtitle>
+                            </div>
+                          </div>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </div>
+        
+                    </v-list>
+                  </v-card>
+                </template>
                 <hr class="grey--text" />
                 <h4 class="mb-3 mt-3">Up next</h4>
                 <v-tabs
@@ -606,6 +654,7 @@
       singerVideos: [],
       watchedVideos: [],
       watchLaterVideos: [],
+      topicPlaylist: [],
       ownPlaylist: [],
       playlist: {},
       page: 1,
@@ -940,6 +989,19 @@
         this.watchLaterVideos = videos.data
         // this.singerVideos = videos.data
       },
+      async getTopicPlaylist(id) {
+        this.loading = true
+        const topicPlaylist = await PlaylistService.getTopicPlaylistVideosById(id)
+          .catch((err) => {
+            console.log(err)
+            this.errored = true
+          })
+          .finally(() => {
+            this.loading = false
+          })
+        if (!topicPlaylist) return
+        this.topicPlaylist = topicPlaylist.data
+      },
       async getOwnPlaylist(id) {
         this.loading = true
         const ownPlaylist = await OwnPlaylistService.getPlaylistVideoById(id)
@@ -987,14 +1049,13 @@
         }
       },
       async updateViews(id, duration, currentTime) {
-        const views = await VideoService.updateViews(id, {
+        await VideoService.updateViews(id, {
           duration: duration,
           current_time: currentTime,
           user_id: this.getCurrentUser.id
         }).catch((err) => {
           console.log(err)
         })
-        if (!views) return
   
         this.video.views++
       },
@@ -1023,6 +1084,9 @@
         } else if (this.$route.params.playlist_id) {
           const id = this.nextVideo(this.playlist.playlist_videos)
           this.handlePlayList(id)
+        } else if(this.$route.params.is_topic_playlist) {
+          const id = this.nextVideo(this.topicPlaylist.playlist_videos)
+          this.handleTopicPlaylist(id)
         } else {
           this.$router.push({
             name: 'WatchVideo',
@@ -1056,6 +1120,16 @@
           params: {
             id: id,
             playlist_id: this.playlist.id
+          }
+        })
+      },
+      handleTopicPlaylist(id) {
+        this.$router.push({
+          name: 'WatchVideo',
+          params: {
+            id: id,
+            topic_playlist_id: this.topicPlaylist.id, 
+            is_topic_playlist: true
           }
         })
       },
@@ -1099,11 +1173,14 @@
         if (this.$route.params.isWatchOwnPlayList) {
           this.getOwnPlaylist(this.$route.params.own_playlist_id)
         }
+        if (this.$route.params.is_topic_playlist) {
+          this.getTopicPlaylist(this.$route.params.topic_playlist_id)
+        }
       }
     },
     beforeRouteUpdate(to, from, next) {
       this.page = 1
-      ;(this.loading = false), (this.loaded = false), (this.subscribed=false),(this.videos = []), (this.video = {}), (this.playlist = {}), (this.watchLaterVideos = []), (this.ownPlaylist = [])
+      ;(this.loading = false), (this.feeling = ''), (this.loaded = false), (this.subscribed = false), (this.videos = []), (this.video = {}), (this.playlist = {}), (this.topicPlaylist = []), (this.watchLaterVideos = []), (this.ownPlaylist = [])
       this.infiniteId += 1
       this.getVideo(to.params.id)
       let video = document.getElementById('videoPlayer')
@@ -1119,6 +1196,9 @@
       }
       if (to.params.isWatchOwnPlayList) {
         this.getOwnPlaylist(to.params.own_playlist_id)
+      }
+      if (to.params.is_topic_playlist) {
+        this.getTopicPlaylist(to.params.topic_playlist_id)
       }
       window.scroll(0, 0)
       next()

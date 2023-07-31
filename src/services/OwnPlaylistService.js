@@ -18,5 +18,11 @@ export default {
   },
   getPlaylistVideoById(id) {
     return Api().get(`own_playlists/${id}`)
+  },
+  getMixPlaylist(params) {
+    return Api().get('own_playlists/mix_playlist', { params: params })
+  },
+  deleteById(id) {
+    return Api().delete(`own_playlists/${id}`)
   }
 }

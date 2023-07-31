@@ -109,22 +109,13 @@
             })
           })
         // console.log(data.data.user)
-        if (data) return
+        if (!data) return
         // const user = await this.$store
         //   .dispatch('getCurrentUser', data.token)
         //   .catch((err) => console.log(err))
     
         // if (!user) return
-        console.log(data)
-        if (!this.getCurrentUser.id) {
-          this.$refs.form.setErrors({
-            Password: ["We don't reconize this email and password"]
-          })
-          this.loading = false
-        } else {
-          this.loading = false
-          this.$router.push({ name: 'Home' })
-        }
+        this.$router.push({ name: 'Home' })
       }
     }
   }

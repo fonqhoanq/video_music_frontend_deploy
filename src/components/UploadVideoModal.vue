@@ -36,7 +36,7 @@
             </div>
   
             <ValidationProvider
-              rules="required|size:15000"
+              rules="required|size:20000"
               v-slot="{ errors }"
               name="file"
               ref="provider"
@@ -91,12 +91,15 @@
               md="8"
               lg="8"
             >
-              <ValidationObserver ref="form">
-                <form @submit.prevent="submit">
+              <ValidationObserver 
+                ref="form"
+                v-slot="{ handleSubmit }"
+              >
+                <form @submit.prevent="handleSubmit(submit)">
                   <ValidationProvider
                     v-slot="{ errors }"
                     name="Title"
-                    rules="required|min:3"
+                    rules="required|min:10|max:100"
                   >
                     <v-text-field
                       v-model="formData.title"
@@ -112,7 +115,7 @@
                   <ValidationProvider
                     v-slot="{ errors }"
                     name="Description"
-                    rules="required|min:3"
+                    rules="required|min:30|max:800"
                   >
                     <v-textarea
                       filled
@@ -121,8 +124,8 @@
                       label="Description"
                       placeholder="Tell viewers about your video"
                       rows="5"
-                      counter="5000"
-                      max-length="5000"
+                      counter="800"
+                      max-length="800"
                       v-model="formData.description"
                       row-height="20"
                     ></v-textarea>
@@ -191,7 +194,7 @@
                       :loading="submitLoading"
                       type="submit"
                       class="primary"
-                      :disabled="!validDate"
+                      :disabled="!validDate || imgDataUrl == ''"
                       depressed
                       >Submit</v-btn
                     >
@@ -333,7 +336,7 @@
         // this.formData.title = video.title;
         // this.formData.description = video.description;
         // this.formData.cateogry = video.cateogry;
-        this.url = `http://52.194.220.88/videos/${video.id}/thumbnails`;
+        this.url = `http://54.65.201.67/videos/${video.id}/thumbnails`;
         // this.interval = setInterval(() => {
         //   if (this.value === 100) {
         //     this.uploaded = true

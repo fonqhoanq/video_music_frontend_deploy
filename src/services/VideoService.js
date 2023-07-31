@@ -11,6 +11,9 @@ export default {
       params
     })
   },
+  getNewReleaseVideo() {
+    return Api().get('videos/new_release')
+  },
   getBySingerId(data, params) {
     return Api().get(`videos/singer/${data}`, {
       params

@@ -216,7 +216,7 @@
           password: false
         },
         imgDataUrl: localStorage.getItem('avatarUrl'),
-        url: `http://52.194.220.88/singers/${this.$store.getters.getCurrentSinger.id}/avatar`,
+        url: `http://54.65.201.67/singers/${this.$store.getters.getCurrentSinger.id}/avatar`,
         headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       }
     },
@@ -327,8 +327,8 @@
         var avatar = ''
         localStorage.setItem('avatarUrl', jsonData.avatarUrl)
         this.imgDataUrl = jsonData.avatarUrl
-        if (jsonData.avatarUrl.includes('http://52.194.220.88/')) {
-          avatar = jsonData.avatarUrl.replace('http://52.194.220.88/', '')
+        if (jsonData.avatarUrl.includes('http://54.65.201.67/')) {
+          avatar = jsonData.avatarUrl.replace('http://54.65.201.67/', '')
         }
         singer.avatarUrl = avatar
         this.$store.dispatch('updateSingerInfor', singer)

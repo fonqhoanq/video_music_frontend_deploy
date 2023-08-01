@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://54.65.201.67/";
+const BASE_URL = "https://vuratubeapi.store/";
 
 const state = {
   singer_auth_token: localStorage.getItem("singer_auth_token"),
@@ -11,7 +11,7 @@ const state = {
     age: localStorage.getItem("age"),
     avatarUrl: localStorage.getItem("avatarUrl")
   },
-  base_url: "http://54.65.201.67/"
+  base_url: "https://vuratubeapi.store/"
 };
 const getters = {
   getSingerAuthToken(state) {

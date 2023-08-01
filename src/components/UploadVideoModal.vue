@@ -336,7 +336,7 @@
         // this.formData.title = video.title;
         // this.formData.description = video.description;
         // this.formData.cateogry = video.cateogry;
-        this.url = `http://54.65.201.67/videos/${video.id}/thumbnails`;
+        this.url = `https://vuratubeapi.store/videos/${video.id}/thumbnails`;
         // this.interval = setInterval(() => {
         //   if (this.value === 100) {
         //     this.uploaded = true

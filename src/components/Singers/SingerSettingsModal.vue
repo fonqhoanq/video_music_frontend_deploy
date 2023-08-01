@@ -216,7 +216,7 @@
           password: false
         },
         imgDataUrl: localStorage.getItem('avatarUrl'),
-        url: `http://54.65.201.67/singers/${this.$store.getters.getCurrentSinger.id}/avatar`,
+        url: `https://vuratubeapi.store/singers/${this.$store.getters.getCurrentSinger.id}/avatar`,
         headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       }
     },
@@ -327,8 +327,8 @@
         var avatar = ''
         localStorage.setItem('avatarUrl', jsonData.avatarUrl)
         this.imgDataUrl = jsonData.avatarUrl
-        if (jsonData.avatarUrl.includes('http://54.65.201.67/')) {
-          avatar = jsonData.avatarUrl.replace('http://54.65.201.67/', '')
+        if (jsonData.avatarUrl.includes('https://vuratubeapi.store/')) {
+          avatar = jsonData.avatarUrl.replace('https://vuratubeapi.store/', '')
         }
         singer.avatarUrl = avatar
         this.$store.dispatch('updateSingerInfor', singer)

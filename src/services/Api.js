@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default () => {
   const axiosInstance = axios.create({
-    baseURL: `http://54.65.201.67`
+    baseURL: `https://vuratubeapi.store`
   })
 
   const token = localStorage.getItem('token')

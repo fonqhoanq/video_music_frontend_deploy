@@ -163,7 +163,7 @@ export default {
       },
       loading: false,
       imgDataUrl: `${this.$store.getters.getUrl}${this.$store.getters.getCurrentUser.avatarUrl}`,
-      url: `http://54.65.201.67/users/${this.$store.getters.getCurrentUser.id}/avatar`,
+      url: `https://vuratubeapi.store/users/${this.$store.getters.getCurrentUser.id}/avatar`,
       headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
     }
   },

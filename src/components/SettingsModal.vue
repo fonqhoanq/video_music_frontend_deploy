@@ -216,7 +216,7 @@
           password: false
         },
         imgDataUrl: `${this.$store.getters.getUrl}${localStorage.getItem('avatarUrl')}`,
-        url: `http://54.65.201.67/users/${this.$store.getters.getCurrentUser.id}/avatar`,
+        url: `https://vuratubeapi.store/users/${this.$store.getters.getCurrentUser.id}/avatar`,
         headers: { Authorization: `Bearer ${this.$store.getters.getToken}` }
       }
     },
@@ -324,8 +324,8 @@
         console.log('-------- upload success --------')
         const user = this.$store.getters.getCurrentUser
         var avatar = ''
-        if (jsonData.avatarUrl.includes('http://54.65.201.67/')) {
-          avatar = jsonData.avatarUrl.replace('http://54.65.201.67/', '')
+        if (jsonData.avatarUrl.includes('https://vuratubeapi.store/')) {
+          avatar = jsonData.avatarUrl.replace('https://vuratubeapi.store/', '')
         }
         localStorage.setItem('avatarUrl', avatar)
         user.avatarUrl = avatar

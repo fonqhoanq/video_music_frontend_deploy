@@ -25,8 +25,8 @@
             @change="getViewWeeklyChartData"
           ></v-select>
           <line-chart
-            :labels="weeklyLabels"
-            :data-list="weeklyData" 
+            :labels="viewWeeklyLabels"
+            :data-list="viewWeeklyData" 
             title-text="Daily View Chart" 
             label-text="Views"
           ></line-chart>
@@ -81,7 +81,7 @@ export default {
   data: () => ({
     subscribersDialog: false,
     timeItems: ['This week', 'Last week'],
-    selected: 'Last week',
+    selected: 'This week',
     viewWeeklyLabels: [],
     viewWeeklyData: [],
     viewYearlyLabels: [
@@ -141,8 +141,8 @@ export default {
         console.log(err)
       })
       if (!chartData) return
-      // this.viewWeeklyLabels = []
-      // this.viewWeeklyData = []
+      this.viewWeeklyData.length = 0
+      this.viewWeeklyLabels.length = 0
       for (var i = 1; i <= 7; i++) {
         if (this.selected == 'This week')
           this.viewWeeklyLabels.push(moment().day(i).format('D/M'))
@@ -173,6 +173,7 @@ export default {
           this.items[0].today = this.viewWeeklyData[i-1]
         }
       }
+
     }
   },
   created() {

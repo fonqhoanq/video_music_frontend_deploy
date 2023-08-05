@@ -48,6 +48,20 @@ export default {
       default: 'Label'
     }
   },
+  watch: {
+    labels: {
+      handler() {
+        this.dataLine.labels = this.labels
+      },
+      immediate: true
+    },
+    dataList: {
+      handler() {
+        this.dataLine.datasets[0].data = this.dataList
+      },
+      immediate: true
+    }
+  },
   data() {
     return {
       dataLine: {
@@ -84,14 +98,8 @@ export default {
       return this.options
     }
   },
-  methods: {
-    title() {
-      console.log('title')
-      console.log(this.labels)
-    }
-  },
   mounted() {
-    this.title()
+    this.renderChart(this.dataLine, this.options)
   }
 }
 </script>

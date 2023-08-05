@@ -133,7 +133,7 @@
             <v-btn small color="red" depressed fab v-on="on" class="white--text">
               <v-avatar v-if="getCurrentSinger.avatarUrl !== 'no-photo.jpg'">
                 <img
-                  :src="`${avatar}`"
+                  :src="`${getUrl}${avatar}`"
                   :alt="`${getCurrentSinger.channelName} avatar`"
                 />
               </v-avatar>
@@ -151,7 +151,7 @@
                 <v-list-item-avatar>
                   <v-avatar v-if="getCurrentSinger.avatarUrl !== 'no-photo.jpg'">
                     <img
-                      :src="`${avatar}`"
+                      :src="`${getUrl}${avatar}`"
                     />
                   </v-avatar>
                   <template v-else>
@@ -278,7 +278,7 @@
                     v-if="getCurrentSinger.avatarUrl !== 'no-photo.jpg'"
                   >
                     <img
-                      :src="`${avatar}`"
+                      :src="`${getUrl}${avatar}`"
                       :alt="`${getCurrentSinger.channelName} avatar`"
                     />
                   </v-avatar>
@@ -409,6 +409,7 @@
       },
       search() {
         console.log('hello')
+        console.log(this.getUrl)
       },
       modal() {
         this.dialog = true

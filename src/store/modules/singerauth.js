@@ -110,16 +110,16 @@ const mutations = {
     console.log(data);
     console.log(data.data.id);
     state.singer = {
-      id: data.data.singer.id,
-      channelName: data.data.singer.channel_name,
-      email: data.data.singer.email,
-      age: data.data.singer.age,
+      id: data.data.id,
+      channelName: data.data.channelName,
+      email: data.data.email,
+      age: data.data.age,
       avatarUrl: data.data.avatarUrl
     }
-    localStorage.setItem("id", data.data.singer.id);
-    localStorage.setItem("channelName", data.data.singer.channel_name);
-    localStorage.setItem("email", data.data.singer.email);
-    localStorage.setItem("age", data.data.singer.age);
+    localStorage.setItem("id", data.data.id);
+    localStorage.setItem("channelName", data.data.channelName);
+    localStorage.setItem("email", data.data.email);
+    localStorage.setItem("age", data.data.age);
     localStorage.setItem("avatarUrl", data.data.avatarUrl);
     console.log(localStorage.getItem("id"));
     console.log(localStorage.getItem("avatarUrl"));

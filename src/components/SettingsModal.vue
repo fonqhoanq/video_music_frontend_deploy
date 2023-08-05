@@ -324,8 +324,8 @@
         console.log('-------- upload success --------')
         const user = this.$store.getters.getCurrentUser
         var avatar = ''
-        if (jsonData.avatarUrl.includes('https://vuratubeapi.store/')) {
-          avatar = jsonData.avatarUrl.replace('https://vuratubeapi.store/', '')
+        if (jsonData.avatarUrl.includes('http://vuratubeapi.store/')) {
+          avatar = jsonData.avatarUrl.replace('http://vuratubeapi.store/', '')
         }
         localStorage.setItem('avatarUrl', avatar)
         user.avatarUrl = avatar

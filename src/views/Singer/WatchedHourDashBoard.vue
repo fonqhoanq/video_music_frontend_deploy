@@ -47,9 +47,9 @@ export default {
   },
   data: () => ({
     favoriteLabels: ['Like', 'Dislike'],
-    favoriteData: [150, 5],
-    // hoursData: [],
-    hoursData: [10, 20, 90,30, 80, 50, 60, 40, 70, 100],
+    favoriteData: [],
+    hoursData: [],
+    // hoursData: [10, 20, 90,30, 80, 50, 60, 40, 70, 100],
     viewYearlyLabels: [
         'Jan',
         'Feb',
